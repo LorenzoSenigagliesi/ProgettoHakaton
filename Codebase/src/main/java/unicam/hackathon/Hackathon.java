@@ -4,18 +4,19 @@ import java.util.Date;
 
 public class Hackathon {
     private String nome;
-    private int id;
-    private Date data;
-    private Date dataFine;
-    private Date dataFineIscrizioni;
-    private String regolamento;
-    private String luogo;
+    private Date Data;
+    private String Luogo;
+    private String Regolamento;
+    private Date DataFine;
+    private Date DataFineIscrizioni;
+    private int DimTeam;
+    private StatiHackathon Stato;
+    //TODO: Da implementare in tabelle a parte
     //private Team teamIscritti[];
-    private int dimTeam;
     //private Giudice giudice;
     //private Organizzatore organizzatore;
     //private Mentore mentori[];
-    //private stato;
+
 
     public String getNome() {
         return nome;
@@ -25,59 +26,55 @@ public class Hackathon {
         this.nome = nome;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Date getData() {
-        return data;
+        return Data;
     }
 
     public void setData(Date data) {
-        this.data = data;
+        this.Data = data;
     }
 
     public Date getDataFine() {
-        return dataFine;
+        return DataFine;
     }
 
     public void setDataFine(Date dataFine) {
-        this.dataFine = dataFine;
+        this.DataFine = dataFine;
     }
 
     public Date getDataFineIscrizioni() {
-        return dataFineIscrizioni;
+        return DataFineIscrizioni;
     }
 
     public void setDataFineIscrizioni(Date dataFineIscrizioni) {
-        this.dataFineIscrizioni = dataFineIscrizioni;
+        this.DataFineIscrizioni = dataFineIscrizioni;
     }
 
     public String getRegolamento() {
-        return regolamento;
+        return Regolamento;
     }
 
     public void setRegolamento(String regolamento) {
-        this.regolamento = regolamento;
+        this.Regolamento = regolamento;
     }
 
     public String getLuogo() {
-        return luogo;
+        return Luogo;
     }
 
     public void setLuogo(String luogo) {
-        this.luogo = luogo;
+        this.Luogo = luogo;
     }
 
     public int getDimTeam() {
-        return dimTeam;
+        return DimTeam;
     }
 
     public void setDimTeam(int dimTeam) {
-        this.dimTeam = dimTeam;
+        this.DimTeam = dimTeam;
+    }
+
+    public String getStato() {
+        return Stato.getName();
     }
 }
