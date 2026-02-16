@@ -1,13 +1,11 @@
 package unicam.account;
-import lombok.Getter;
-import org.jetbrains.annotations.*;
+
 import java.util.Objects;
-@Getter
 
 public class Visitatore implements UtenteGenerico {
     private final String userName;
 
-    public Visitatore(@NotNull String userName) {
+    public Visitatore(String userName) {
         if (userName.isBlank()) {
             throw new IllegalArgumentException("Username non può essere nullo o vuoto");
         }

@@ -1,9 +1,6 @@
 package unicam.account;
 
-import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
-@Getter
 
 public class UtenteRegistrato implements UtenteGenerico {
     /**
@@ -19,7 +16,7 @@ public class UtenteRegistrato implements UtenteGenerico {
     private TipoUtente Tipo;
     private Double Salvadanaio;
 
-    public UtenteRegistrato(@NotNull String userName, @NotNull String email, @NotNull String password) {
+    public UtenteRegistrato(String userName, String email, String password) {
         if (userName.isBlank()) {
             throw new IllegalArgumentException("Username non può essere nullo o vuoto");
         }
@@ -27,7 +24,7 @@ public class UtenteRegistrato implements UtenteGenerico {
             throw new IllegalArgumentException("Username deve essere tra 3 e 50 caratteri");
         }
         if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) { throw new IllegalArgumentException("Formato email errato"); }
-        this.userName=userName;
+        this.userName = userName;
         this.email = email;
         this.password = password;
         this.team = null;
@@ -42,6 +39,26 @@ public class UtenteRegistrato implements UtenteGenerico {
         }else{
             Tipo = TipoUtente.MembroTeam;
         }
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public TipoUtente getTipo() {
+        return Tipo;
     }
 
     // Metodi Object
