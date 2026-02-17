@@ -12,4 +12,12 @@ public class Team {
     public void setDim(int dim){
         this.dim = dim;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getDim() {
+        return dim;
+    }
 }

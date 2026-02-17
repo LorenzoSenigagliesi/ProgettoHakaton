@@ -1,7 +1,7 @@
 package unicam.account;
 
 import unicam.SQLService;
-
+import unicam.amministrazione.*;
 import java.util.Objects;
 import java.util.Random;
 
@@ -48,9 +48,20 @@ public class GestioneAccount {
     }
 
     public Team readTeam(String nome){
-        if(!(utenteCorrente instanceof UtenteRegistrato) || !(((UtenteRegistrato) utenteCorrente).getTipo().equals(TipoUtente.MembroTeam))){
-            return null;
-        }
         return SQL.readTeam(nome);
+    }
+
+    public boolean creazioneTeam(String nome){
+        if(!(utenteCorrente instanceof UtenteRegistrato) || !(((UtenteRegistrato) utenteCorrente).getTipo().equals(TipoUtente.Utente))){
+            return false;
+        }
+
+        if(readTeam(nome)!=null){
+            return false;
+        }
+
+        Team team = new Team(nome);
+        return SQL.creaTeam(team, (UtenteRegistrato)utenteCorrente);
+        //modifica utente
     }
 }

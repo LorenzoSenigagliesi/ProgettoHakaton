@@ -10,4 +10,12 @@ public class MembroStaff implements UtenzaAmministrazione{
         this.email = email;
         this.password = password;
     }
+
+    /**
+     * accesso sottomissioni()
+     * */
+
+    /**
+     * VisualizzazioneHackaton
+     * */
 }

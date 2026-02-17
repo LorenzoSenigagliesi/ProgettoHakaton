@@ -2,9 +2,8 @@ package unicam;
 import unicam.account.Team;
 import unicam.account.UtenteGenerico;
 import unicam.account.UtenteRegistrato;
-import unicam.amministrazione.MembroStaff;
+import unicam.amministrazione.*;
 import unicam.hackathon.Hackathon;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -137,5 +136,20 @@ public class SQLService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean creaTeam(Team team, UtenteRegistrato utente){
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            String query = "Insert into Team (nome, dim) values ('"+team.getNome()+"',"+ team.getDim()+")";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, "admin");
+            ResultSet rs = pstmt.executeQuery();
+            String tipoUtente = rs.getString("tipo_utente"); // o il nome della colonna che distingue il tipo
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
