@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="unicam.controller.HomeController"
+            styleClass="root">
+
+    <!-- Top Header -->
+    <top>
+        <HBox alignment="CENTER_LEFT" style="-fx-padding: 30 40 20 40;">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Hackathon Disponibili" styleClass="title-label"/>
+                <Label text="Seleziona un hackathon per vedere i dettagli" styleClass="subtitle-label"/>
+            </VBox>
+            <Button fx:id="btnLogin" text="Login" styleClass="btn-primary"
+                    onAction="#onLogin"/>
+        </HBox>
+    </top>
+
+    <!-- Center: Hackathon List -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox fx:id="hackathonList" spacing="16" style="-fx-padding: 10 40 30 40;">
+                <!-- Cards generate dinamicamente dal controller -->
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
