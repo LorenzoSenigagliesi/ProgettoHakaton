@@ -3,6 +3,8 @@ package unicam.account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unicam.SQLService;
+import unicam.amministrazione.*;
+
 
 import java.util.Objects;
 import java.util.Random;
@@ -44,7 +46,7 @@ public class GestioneAccount {
     }
 
     public boolean registrazione(UtenteRegistrato utente){
-        if(!(utenteCorrente instanceof Visitatore) && !SQL.registrazione(utente)){
+        if(!(utenteCorrente instanceof Visitatore) && !SQL.salvaUtente(utente)){
             return false;
         }
         utenteCorrente = utente;
@@ -70,7 +72,39 @@ public class GestioneAccount {
         if (!SQL.creaTeam(team, (UtenteRegistrato)utenteCorrente)){
             return false;
         }
-        return true;
         //modifica utente
+        ((UtenteRegistrato)utenteCorrente).setTeam(nome);
+         return SQL.salvaUtente((UtenteRegistrato)utenteCorrente);
+    }
+
+    public boolean accettazioneTeam(String nomeTeam) {
+        if (!(utenteCorrente instanceof UtenteRegistrato) || !(((UtenteRegistrato) utenteCorrente).getTipo().equals(TipoUtente.Utente))) {
+            return false;
+        }
+
+        ((UtenteRegistrato)utenteCorrente).setTeam(nomeTeam);
+        return SQL.salvaUtente((UtenteRegistrato)utenteCorrente);
+    }
+
+    //metodi per amministratori Team
+
+    public boolean cambiaRuolo(staffDecorator ruolo){
+        if (!(utenteCorrente instanceof UtenzaAmministrazione)){
+            return false;
+        }
+        switch (ruolo){
+            case Organizzatore organizzatore:
+                utenteCorrente = new Organizzatore((UtenzaAmministrazione)utenteCorrente);
+                break;
+            case Mentore mentore:
+                utenteCorrente = new Mentore((UtenzaAmministrazione)utenteCorrente);
+                break;
+            case Giudice giudice:
+                utenteCorrente = new Giudice((UtenzaAmministrazione)utenteCorrente);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + ruolo);
+        }
+        return true;
     }
 }

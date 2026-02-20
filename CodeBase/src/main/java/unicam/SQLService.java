@@ -60,7 +60,7 @@ public class SQLService {
         return membro.orElse(null);
     }
 
-    public boolean registrazione(UtenteRegistrato utente) {
+    public boolean salvaUtente(UtenteRegistrato utente) {
         try {
             tabellaUtenti.save(utente);
             return true;
@@ -82,17 +82,6 @@ public class SQLService {
     public boolean creaTeam(Team team, UtenteRegistrato utente) {
         try {
             tabellaTeam.save(team);
-            utente.setTeam(team.getNome());
-            tabellaUtenti.save(utente);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean cambiaTeam(Team team, UtenteRegistrato utente) {
-        try {
             utente.setTeam(team.getNome());
             tabellaUtenti.save(utente);
             return true;

@@ -42,6 +42,9 @@ public class Hackathon {
     //private Mentore mentori[];
 
 
+
+    //getter & setter
+
     public String getNome() {
         return nome;
     }

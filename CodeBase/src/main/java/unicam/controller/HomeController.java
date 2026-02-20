@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -91,7 +90,7 @@ public class HomeController {
     @FXML
     private void onLogin() {
         // TODO: implementare finestra di login
-        sqlService.registrazione(new UtenteRegistrato("Pippo","PippoDroga@gmail.com","Droga"));
+        sqlService.salvaUtente(new UtenteRegistrato("Pippo","PippoDroga@gmail.com","Droga"));
     }
 
     private void openDetail(Hackathon hackathon) {
