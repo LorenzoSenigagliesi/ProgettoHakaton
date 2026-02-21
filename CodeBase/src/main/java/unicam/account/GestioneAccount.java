@@ -2,7 +2,7 @@ package unicam.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unicam.SQLService;
+import unicam.SQL;
 import unicam.amministrazione.*;
 
 
@@ -13,10 +13,10 @@ import java.util.Random;
 public class GestioneAccount {
     private final Random random = new Random();
     private UtenteGenerico utenteCorrente = new Visitatore("user" + String.format("%05d", random.nextInt(90000)));
-    private final SQLService SQL;
+    private final SQL SQL;
 
     @Autowired
-    public GestioneAccount(SQLService sqlService) {
+    public GestioneAccount(SQL sqlService) {
         this.SQL = sqlService;
     }
 
@@ -87,7 +87,6 @@ public class GestioneAccount {
     }
 
     //metodi per amministratori Team
-
     public boolean cambiaRuolo(staffDecorator ruolo){
         if (!(utenteCorrente instanceof UtenzaAmministrazione)){
             return false;
