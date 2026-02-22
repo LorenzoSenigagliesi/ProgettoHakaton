@@ -12,8 +12,10 @@ public class MentoriHackathon {
     @Column(name = "emailstaff", nullable = false)
     private String email;
 
-    @Column(name = "hackathon")
+    @Column(name = "hackaton")
     private String hackathon;
+
+    protected MentoriHackathon() {}
 
     public MentoriHackathon(String email, String hackathon) {
         this.email = email;

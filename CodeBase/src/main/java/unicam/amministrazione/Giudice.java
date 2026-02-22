@@ -9,6 +9,6 @@ public class Giudice extends StaffDecorator {
 
     @Override
     public String getRuolo() {
-        return "Giudice " + super.getRuolo();
+        return "Giudice ";
     }
 }

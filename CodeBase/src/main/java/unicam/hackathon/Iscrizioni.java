@@ -21,11 +21,17 @@ public class Iscrizioni {
     @Column(name = "voto", nullable = false)
     private int voto;
 
+    @Column(name = "validata", nullable = false)
+    private boolean validata;
+
+    protected Iscrizioni() {}
+
     public Iscrizioni(String team, String hackathon, String sottomissioni, int voto) {
         this.team = team;
         this.hackathon = hackathon;
         this.sottomissioni = sottomissioni;
         this.voto = voto;
+        this.validata = false;
     }
 
     public void setTeam(String team) {
@@ -58,5 +64,13 @@ public class Iscrizioni {
 
     public void setVoto(int voto) {
         this.voto = voto;
+    }
+
+    public boolean isValidata() {
+        return validata;
+    }
+
+    public void setValidata(boolean validata) {
+        this.validata = validata;
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="unicam.controller.ValutazioneController"
+            styleClass="root">
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="top-bar"
+              style="-fx-padding: 16 40;">
+            <Button text="Indietro" styleClass="btn-secondary" onAction="#onIndietro"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblTitolo" text="Valutazione Sottomissioni" styleClass="title-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox fx:id="sottomissioniList" spacing="16" style="-fx-padding: 24 40 40 40;">
+                <!-- Cards generate dinamicamente -->
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

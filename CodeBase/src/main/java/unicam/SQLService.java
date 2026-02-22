@@ -9,6 +9,8 @@ import unicam.hackathon.Hackathon;
 import unicam.hackathon.Iscrizioni;
 import unicam.hackathon.MentoriHackathon;
 import unicam.notifiche.Notifiche;
+import unicam.notifiche.Segnalazione;
+import unicam.supporto.RichiesteSupporto;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +25,20 @@ public class SQLService {
     private final TabellaMentoriHackathon tabellaMentoriHackathon;
     private final TabellaNotifiche tabellaNotifiche;
     private final TabellaIscrizioni tabellaIscrizioni;
+    private final TabellaRichiesteSupporto tabellaRichiesteSupporto;
+    private final TabellaCall tabellaCall;
+    private final TabellaSegnalazioni tabellaSegnalazioni;
     @Autowired
     public SQLService(TabellaUtenti tabellaUtenti,
                       TabellaAmministrazione tabellaAmministrazione,
                       TabellaHackathon tabellaHackathon,
                       TabellaTeam tabellaTeam,
-                      TabellaMentoriHackathon tabellaMentoriHackathon, TabellaNotifiche tabellaNotifiche, TabellaIscrizioni tabellaIscrizioni) {
+                      TabellaMentoriHackathon tabellaMentoriHackathon, 
+                      TabellaNotifiche tabellaNotifiche, 
+                      TabellaIscrizioni tabellaIscrizioni,
+                      TabellaRichiesteSupporto tabellaRichiesteSupporto,
+                      TabellaCall tabellaCall,
+                      TabellaSegnalazioni tabellaSegnalazioni) {
         this.tabellaUtenti = tabellaUtenti;
         this.tabellaAmministrazione = tabellaAmministrazione;
         this.tabellaHackathon = tabellaHackathon;
@@ -36,6 +46,9 @@ public class SQLService {
         this.tabellaMentoriHackathon = tabellaMentoriHackathon;
         this.tabellaNotifiche = tabellaNotifiche;
         this.tabellaIscrizioni = tabellaIscrizioni;
+        this.tabellaRichiesteSupporto = tabellaRichiesteSupporto;
+        this.tabellaCall = tabellaCall;
+        this.tabellaSegnalazioni = tabellaSegnalazioni;
     }
 
     public List<Hackathon> getAllHackathons() {
@@ -138,5 +151,109 @@ public class SQLService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Notifiche findNotifiche(int id) {
+        return tabellaNotifiche.findById(id).orElse(null);
+    }
+
+    public List<Notifiche> getNotifichePerUtente(String destinatario) {
+        return tabellaNotifiche.findByDestinatario(destinatario);
+    }
+
+    public UtenteRegistrato findUtenteByEmail(String email) {
+        return tabellaUtenti.findByEmail(email).orElse(null);
+    }
+
+    public List<UtenteRegistrato> getMembriTeam(String nomeTeam) {
+        return tabellaUtenti.findByTeam(nomeTeam);
+    }
+
+    // Metodi per RichiesteSupporto
+    public boolean salvaRichiestaSupporto(RichiesteSupporto richiesta) {
+        try {
+            tabellaRichiesteSupporto.save(richiesta);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<RichiesteSupporto> getRichiesteSupportoByHackathon(String hackathonNome) {
+        return tabellaRichiesteSupporto.findByHackathonNome(hackathonNome);
+    }
+
+    public List<RichiesteSupporto> getRichiesteSupportoByMentore(String mentoreEmail) {
+        return tabellaRichiesteSupporto.findByMentoreEmail(mentoreEmail);
+    }
+
+    public List<RichiesteSupporto> getRichiesteSupportoByTeam(String teamNome) {
+        return tabellaRichiesteSupporto.findByTeamNome(teamNome);
+    }
+
+    public Optional<RichiesteSupporto> getRichiestaSupporto(Long id) {
+        return tabellaRichiesteSupporto.findById(id);
+    }
+
+    // Metodi per Call
+    public boolean salvaCall(unicam.calendario.Call call) {
+        try {
+            tabellaCall.save(call);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<unicam.calendario.Call> getCallByHackathon(String hackathonNome) {
+        return tabellaCall.findByHackathonNomeOrderByDataOraAsc(hackathonNome);
+    }
+
+    public List<unicam.calendario.Call> getCallByMentore(String mentoreEmail) {
+        return tabellaCall.findByMentoreEmail(mentoreEmail);
+    }
+
+    public Optional<unicam.calendario.Call> getCall(Long id) {
+        return tabellaCall.findById(id);
+    }
+
+    public boolean eliminaCall(Long id) {
+        try {
+            tabellaCall.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Metodi per Segnalazioni
+    public boolean salvaSegnalazione(Segnalazione segnalazione) {
+        try {
+            tabellaSegnalazioni.save(segnalazione);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Segnalazione> getSegnalazioniByHackathon(String hackathonNome) {
+        return tabellaSegnalazioni.findByHackathonNome(hackathonNome);
+    }
+
+    public List<Segnalazione> getSegnalazioniNonGestite(String hackathonNome) {
+        return tabellaSegnalazioni.findByHackathonNomeAndGestita(hackathonNome, false);
+    }
+
+    public Optional<Segnalazione> getSegnalazione(Long id) {
+        return tabellaSegnalazioni.findById(id);
+    }
+
+    // Metodo per ottenere mentori di un hackathon
+    public List<MentoriHackathon> getMentoriHackathon(String hackathonNome) {
+        return tabellaMentoriHackathon.findByHackathon(hackathonNome);
     }
 }

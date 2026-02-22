@@ -8,6 +8,7 @@ public class Notifiche {
     @Id
     @Column(name = "Id", nullable = false)
     private int Id;
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private TipoNotifica tipo;
     @Column(name = "destina", nullable = false)
@@ -16,6 +17,8 @@ public class Notifiche {
     private String mittente;
     @Column(name = "messaggio", nullable = false)
     private String messaggio;
+
+    protected Notifiche() {}
 
     public Notifiche(TipoNotifica tipo, String messaggio, String mittente, String destinatario) {
         this.tipo = tipo;

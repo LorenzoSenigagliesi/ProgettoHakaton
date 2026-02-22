@@ -10,14 +10,27 @@
 
     <!-- Top Header -->
     <top>
-        <HBox alignment="CENTER_LEFT" style="-fx-padding: 30 40 20 40;">
-            <VBox spacing="4" HBox.hgrow="ALWAYS">
-                <Label text="Hackathon Disponibili" styleClass="title-label"/>
-                <Label text="Seleziona un hackathon per vedere i dettagli" styleClass="subtitle-label"/>
-            </VBox>
-            <Button fx:id="btnLogin" text="Login" styleClass="btn-primary"
-                    onAction="#onLogin"/>
-        </HBox>
+        <VBox>
+            <HBox alignment="CENTER_LEFT" style="-fx-padding: 20 40 10 40;">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="HackHub" style="-fx-text-fill: #6366F1; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                </VBox>
+                <HBox fx:id="headerActions" spacing="10" alignment="CENTER_RIGHT"/>
+            </HBox>
+
+            <!-- User Info Bar -->
+            <HBox fx:id="userInfoBar" alignment="CENTER_LEFT" spacing="16"
+                  style="-fx-padding: 8 40; -fx-background-color: #1E1E2E;"
+                  managed="false" visible="false">
+            </HBox>
+
+            <HBox alignment="CENTER_LEFT" style="-fx-padding: 10 40 20 40;">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Hackathon Disponibili" styleClass="title-label"/>
+                    <Label fx:id="lblUserInfo" text="Consultazione elenco hackathon" styleClass="subtitle-label"/>
+                </VBox>
+            </HBox>
+        </VBox>
     </top>
 
     <!-- Center: Hackathon List -->

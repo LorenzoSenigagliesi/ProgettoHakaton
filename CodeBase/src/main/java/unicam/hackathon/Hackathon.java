@@ -36,13 +36,14 @@ public class Hackathon {
     @Column(name = "dim_team")
     private int dimTeam;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "stato")
     private StatoHackathon stato;
 
     @Column (name = "giudice")
     private String giudice;
 
-    @Column (name = "Organizzatore")
+    @Column (name = "\"Organizzatore\"")
     private String organizzatore;
 
     @Column (name = "maxteam")
@@ -144,6 +145,10 @@ public class Hackathon {
             case StatoHackathon.InCorso -> stato = StatoHackathon.InValutazione;
             case StatoHackathon.InValutazione -> stato = StatoHackathon.Concluso;
         }
+    }
+
+    public void setMaxteam(int maxteam) {
+        this.maxteam = maxteam;
     }
 
     public String getVincitori() {

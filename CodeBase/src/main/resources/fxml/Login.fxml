@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="unicam.controller.LoginController"
+      spacing="20" alignment="CENTER" styleClass="root"
+      style="-fx-padding: 40;">
+
+    <Label text="Accedi a HackHub" styleClass="title-label"/>
+    <Label text="Inserisci le tue credenziali" styleClass="subtitle-label"/>
+
+    <VBox spacing="12" style="-fx-max-width: 350;">
+        <Label text="Email" styleClass="text-secondary"/>
+        <TextField fx:id="txtEmail" promptText="email@esempio.com" styleClass="text-field-dark"/>
+
+        <Label text="Password" styleClass="text-secondary"/>
+        <PasswordField fx:id="txtPassword" promptText="Password" styleClass="text-field-dark"/>
+
+        <Label text="Tipo Account" styleClass="text-secondary"/>
+        <ComboBox fx:id="cmbTipo" styleClass="combo-box-dark" maxWidth="Infinity"/>
+
+        <Label fx:id="lblErrore" text="" style="-fx-text-fill: #EF4444; -fx-font-size: 13px;"
+               managed="false" visible="false"/>
+    </VBox>
+
+    <HBox spacing="12" alignment="CENTER">
+        <Button text="Accedi" styleClass="btn-primary" onAction="#onLogin"/>
+        <Button text="Annulla" styleClass="btn-secondary" onAction="#onAnnulla"/>
+    </HBox>
+
+</VBox>
