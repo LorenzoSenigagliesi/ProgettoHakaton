@@ -87,7 +87,8 @@ public class GestioneAccount {
     }
 
     //metodi per amministratori Team
-    public boolean cambiaRuolo(staffDecorator ruolo){
+
+    public boolean cambiaRuolo(StaffDecorator ruolo){
         if (!(utenteCorrente instanceof UtenzaAmministrazione)){
             return false;
         }
@@ -100,7 +101,7 @@ public class GestioneAccount {
                 break;
             case Giudice giudice:
                 utenteCorrente = new Giudice((UtenzaAmministrazione)utenteCorrente);
-                break;
+               break;
             default:
                 throw new IllegalStateException("Unexpected value: " + ruolo);
         }

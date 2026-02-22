@@ -20,12 +20,12 @@ public class Team {
         this.dim = 1;
     }
 
-    public void setDim(int dim){
-        this.dim = dim;
-    }
-
     public String getNome() {
         return nome;
+    }
+
+    public void setDim(int dim){
+        this.dim = dim;
     }
 
     public int getDim() {
