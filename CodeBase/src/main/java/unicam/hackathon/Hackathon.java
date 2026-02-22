@@ -2,6 +2,10 @@ package unicam.hackathon;
 
 import java.util.Date;
 import jakarta.persistence.*;
+import unicam.account.Team;
+import unicam.amministrazione.Giudice;
+import unicam.amministrazione.Mentore;
+import unicam.amministrazione.Organizzatore;
 
 @Entity
 @Table(name = "hackathon")
@@ -13,40 +17,39 @@ public class Hackathon {
 
     @Column(name = "data")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date Data;
+    private Date data;
 
     @Column(name = "luogo")
-    private String Luogo;
+    private String luogo;
 
     @Column(name = "regolamento")
-    private String Regolamento;
+    private String regolamento;
 
     @Column(name = "data_fine")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date DataFine;
+    private Date dataFine;
 
     @Column(name = "data_fine_iscrizioni")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date DataFineIscrizioni;
+    private Date dataFineIscrizioni;
 
     @Column(name = "dim_team")
-    private int DimTeam;
+    private int dimTeam;
 
     @Column(name = "stato")
-    private String stato;
+    private StatoHackathon stato;
 
-    //TODO: Da implementare in tabelle a parte
-    //private Team teamIscritti[];
-    //private Giudice giudice;
-    //private Organizzatore organizzatore;
-    //private Mentore mentori[];
+    @Column (name = "giudice")
+    private String giudice;
 
+    @Column (name = "organizzatore")
+    private String organizzatore;
 
 
     //getter & setter
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -54,58 +57,82 @@ public class Hackathon {
     }
 
     public Date getData() {
-        return Data;
+        return this.data;
     }
 
     public void setData(Date data) {
-        this.Data = data;
+        this.data = data;
     }
 
     public Date getDataFine() {
-        return DataFine;
+        return this.dataFine;
     }
 
     public void setDataFine(Date dataFine) {
-        this.DataFine = dataFine;
+        this.dataFine = dataFine;
     }
 
     public Date getDataFineIscrizioni() {
-        return DataFineIscrizioni;
+        return this.dataFineIscrizioni;
     }
 
     public void setDataFineIscrizioni(Date dataFineIscrizioni) {
-        this.DataFineIscrizioni = dataFineIscrizioni;
+        this.dataFineIscrizioni = dataFineIscrizioni;
     }
 
     public String getRegolamento() {
-        return Regolamento;
+        return this.regolamento;
     }
 
     public void setRegolamento(String regolamento) {
-        this.Regolamento = regolamento;
+        this.regolamento = regolamento;
     }
 
     public String getLuogo() {
-        return Luogo;
+        return this.luogo;
     }
 
     public void setLuogo(String luogo) {
-        this.Luogo = luogo;
+        this.luogo = luogo;
     }
 
     public int getDimTeam() {
-        return DimTeam;
+        return this.dimTeam;
     }
 
     public void setDimTeam(int dimTeam) {
-        this.DimTeam = dimTeam;
+        this.dimTeam = dimTeam;
     }
 
-    public String getStato() {
+    public StatoHackathon getStato() {
         return stato;
     }
 
-    public void setStato(String stato) {
+    public void setStato(StatoHackathon stato) {
         this.stato = stato;
+    }
+
+    public String getGiudice() {
+        return giudice;
+    }
+
+    public void setGiudice(String giudice) {
+        this.giudice = giudice;
+    }
+
+    public String getOrganizzatore() {
+        return organizzatore;
+    }
+
+    public void setOrganizzatore(String organizzatore) {
+        this.organizzatore = organizzatore;
+    }
+
+    public void cambiaStato(){
+        switch (stato){
+            case StatoHackathon.InIscrizione -> stato = StatoHackathon.InCorso;
+            case StatoHackathon.InCorso -> stato = StatoHackathon.InValutazione;
+            case StatoHackathon.InValutazione -> stato = StatoHackathon.Concluso;
+        }
     }
 }

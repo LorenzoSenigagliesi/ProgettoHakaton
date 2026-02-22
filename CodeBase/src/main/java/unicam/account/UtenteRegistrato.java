@@ -22,10 +22,10 @@ public class UtenteRegistrato implements UtenteGenerico {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
-    private TipoUtente Tipo;
+    private TipoUtente tipo;
 
     @Column(name = "salvadanaio")
-    private Double Salvadanaio;
+    private Double salvadanaio;
 
     // Costruttore vuoto richiesto da JPA
     protected UtenteRegistrato() {}
@@ -42,16 +42,16 @@ public class UtenteRegistrato implements UtenteGenerico {
         this.email = email;
         this.password = password;
         this.team = null;
-        Tipo = TipoUtente.Utente;
-        Salvadanaio = 0.0;
+        tipo = TipoUtente.Utente;
+        salvadanaio = 0.0;
     }
 
     public void setTeam(String team) {
         this.team = team;
         if (this.team == null){
-            Tipo = TipoUtente.Utente;
+            tipo = TipoUtente.Utente;
         }else{
-            Tipo = TipoUtente.MembroTeam;
+            tipo = TipoUtente.MembroTeam;
         }
     }
 
@@ -59,20 +59,25 @@ public class UtenteRegistrato implements UtenteGenerico {
         return userName;
     }
 
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public String getTeam() {
-        return team;
+        return this.team;
     }
 
     public TipoUtente getTipo() {
-        return Tipo;
+        return this.tipo;
     }
 
     // Metodi Object
