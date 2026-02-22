@@ -2,14 +2,14 @@ package unicam.hackathon;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unicam.SQL;
+import unicam.SQLService;
 
 @Service
 public class GestioneHackathon {
-    private final SQL SQL;
+    private final SQLService SQL;
 
     @Autowired
-    public GestioneHackathon(SQL sqlService) {
+    public GestioneHackathon(SQLService sqlService) {
         this.SQL = sqlService;
     }
 

@@ -1,13 +1,13 @@
 package unicam.notifiche;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import unicam.SQL;
+import unicam.SQLService;
 
 public class GestioneNotifiche {
-    private final SQL SQL;
+    private final SQLService SQL;
 
     @Autowired
-    public GestioneNotifiche(SQL sqlService) {
+    public GestioneNotifiche(SQLService sqlService) {
         this.SQL = sqlService;
     }
 
@@ -17,6 +17,13 @@ public class GestioneNotifiche {
             return false;
         }
         return SQL.salvaNotifica(NewNotifica);
+    }
+
+    //chiudi
+    //ricerca notifica
+
+    public Notifiche readNotifiche(int Id){
+        return SQL.findNotifiche(Id);
     }
 
 }

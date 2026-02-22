@@ -2,7 +2,7 @@ package unicam.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unicam.SQL;
+import unicam.SQLService;
 import unicam.amministrazione.*;
 
 
@@ -13,10 +13,10 @@ import java.util.Random;
 public class GestioneAccount {
     private final Random random = new Random();
     private UtenteGenerico utenteCorrente = new Visitatore("user" + String.format("%05d", random.nextInt(90000)));
-    private final SQL SQL;
+    private final SQLService SQL;
 
     @Autowired
-    public GestioneAccount(SQL sqlService) {
+    public GestioneAccount(SQLService sqlService) {
         this.SQL = sqlService;
     }
 

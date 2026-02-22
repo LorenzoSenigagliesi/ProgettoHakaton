@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "notifiche")
 public class Notifiche {
     @Id
+    @Column(name = "Id", nullable = false)
+    private int Id;
     @Column(name = "type", nullable = false)
     private TipoNotifica tipo;
     @Column(name = "destina", nullable = false)
@@ -20,5 +22,25 @@ public class Notifiche {
         this.messaggio = messaggio;
         this.mittente = mittente;
         this.destinatario = destinatario;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public TipoNotifica getTipo() {
+        return tipo;
+    }
+
+    public String getDestinatario() {
+        return destinatario;
+    }
+
+    public String getMittente() {
+        return mittente;
+    }
+
+    public String getMessaggio() {
+        return messaggio;
     }
 }

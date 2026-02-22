@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import unicam.CodeBaseApplication;
-import unicam.SQL;
+import unicam.SQLService;
 import unicam.account.UtenteRegistrato;
 import unicam.hackathon.Hackathon;
 
@@ -33,7 +33,7 @@ public class HomeController {
     private Button btnLogin;
 
     @Autowired
-    private SQL sqlService;
+    private SQLService sqlService;
 
     @FXML
     public void initialize() {

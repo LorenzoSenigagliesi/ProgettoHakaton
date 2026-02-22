@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SQL {
+public class SQLService {
 
     private final TabellaUtenti tabellaUtenti;
     private final TabellaAmministrazione tabellaAmministrazione;
@@ -20,11 +20,11 @@ public class SQL {
     private final TabellaTeam tabellaTeam;
     private final TabellaNotifiche tabellanotifiche;
     @Autowired
-    public SQL(TabellaUtenti tabellaUtenti,
-               TabellaAmministrazione tabellaAmministrazione,
-               TabellaHackathon tabellaHackathon,
-               TabellaTeam tabellaTeam,
-               TabellaNotifiche tabellanotifiche) {
+    public SQLService(TabellaUtenti tabellaUtenti,
+                      TabellaAmministrazione tabellaAmministrazione,
+                      TabellaHackathon tabellaHackathon,
+                      TabellaTeam tabellaTeam,
+                      TabellaNotifiche tabellanotifiche) {
         this.tabellaUtenti = tabellaUtenti;
         this.tabellaAmministrazione = tabellaAmministrazione;
         this.tabellaHackathon = tabellaHackathon;
@@ -93,13 +93,11 @@ public class SQL {
 
     public boolean salvaNotifica(Notifiche Notifica) {
         try {
-            tabellaUtenti.save(Notifica);
+            tabellanotifiche.save(Notifica);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-
-    public Notifiche notifiche
 }
