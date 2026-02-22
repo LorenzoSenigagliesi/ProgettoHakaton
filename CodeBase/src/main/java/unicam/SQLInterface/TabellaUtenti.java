@@ -4,10 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import unicam.account.UtenteRegistrato;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface TabellaUtenti extends JpaRepository<UtenteRegistrato, String> {
     Optional<UtenteRegistrato> findByEmailAndPassword(String email, String password);
     boolean existsByEmail(String email);
+    Optional<UtenteRegistrato> findByEmail(String email);
+    List<UtenteRegistrato> findByTeam(String team);
 }

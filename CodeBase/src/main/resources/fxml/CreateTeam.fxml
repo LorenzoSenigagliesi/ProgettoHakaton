@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="unicam.controller.CreateTeamController"
+      spacing="20" alignment="CENTER" styleClass="root"
+      style="-fx-padding: 40;">
+
+    <Label text="Crea il tuo Team" styleClass="title-label"/>
+    <Label text="Scegli un nome unico per il tuo team" styleClass="subtitle-label"/>
+
+    <VBox spacing="12" style="-fx-max-width: 400;">
+        <Label text="Nome Team" styleClass="text-secondary"/>
+        <TextField fx:id="txtNomeTeam" promptText="Nome del team" styleClass="text-field-dark"/>
+
+        <Separator style="-fx-background-color: #2A2A40;"/>
+
+        <Label text="Invita Membri (email, separati da virgola)" styleClass="text-secondary"/>
+        <TextArea fx:id="txtInviti" promptText="email1@ex.com, email2@ex.com"
+                  styleClass="text-area-dark" prefHeight="80" wrapText="true"/>
+
+        <Label fx:id="lblErrore" text="" style="-fx-text-fill: #EF4444; -fx-font-size: 13px;"
+               managed="false" visible="false"/>
+
+        <Label fx:id="lblSuccesso" text="" style="-fx-text-fill: #00F5A0; -fx-font-size: 13px;"
+               managed="false" visible="false"/>
+    </VBox>
+
+    <HBox spacing="12" alignment="CENTER">
+        <Button text="Crea Team" styleClass="btn-accent" onAction="#onCreaTeam"/>
+        <Button text="Chiudi" styleClass="btn-secondary" onAction="#onChiudi"/>
+    </HBox>
+
+</VBox>

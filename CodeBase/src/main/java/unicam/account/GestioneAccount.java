@@ -46,7 +46,7 @@ public class GestioneAccount {
     }
 
     public boolean registrazione(UtenteRegistrato utente){
-        if(!(utenteCorrente instanceof Visitatore) && !SQL.salvaUtente(utente)){
+        if(!(utenteCorrente instanceof Visitatore) || !SQL.salvaUtente(utente)){
             return false;
         }
         utenteCorrente = utente;
@@ -84,6 +84,14 @@ public class GestioneAccount {
 
         ((UtenteRegistrato)utenteCorrente).setTeam(nomeTeam);
         return SQL.salvaUtente((UtenteRegistrato)utenteCorrente);
+    }
+
+    public UtenteGenerico getUtenteCorrente() {
+        return utenteCorrente;
+    }
+
+    public boolean isLoggedIn() {
+        return !(utenteCorrente instanceof Visitatore);
     }
 
     //metodi per amministratori Team

@@ -9,6 +9,6 @@ public class Organizzatore extends StaffDecorator {
 
     @Override
     public String getRuolo() {
-        return "Organizzatore " + super.getRuolo();
+        return "Organizzatore ";
     }
 }

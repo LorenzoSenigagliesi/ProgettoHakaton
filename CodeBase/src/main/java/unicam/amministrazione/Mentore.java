@@ -9,6 +9,6 @@ public class Mentore extends StaffDecorator {
 
     @Override
     public String getRuolo() {
-        return "Mentore " + super.getRuolo();
+        return "Mentore ";
     }
 }
