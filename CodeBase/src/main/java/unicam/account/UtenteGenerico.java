@@ -6,6 +6,9 @@ public interface UtenteGenerico {
     String email = null;
     String password = null;
 
+    public String getUsername();
+    public String getEmail();
+    public String getPassword();
 
     //vanno implementati in tutte le classi che implementano l'interfaccia
     public String toString();

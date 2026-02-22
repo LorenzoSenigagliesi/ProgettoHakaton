@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="unicam.controller.RegistrationController"
+      spacing="20" alignment="CENTER" styleClass="root"
+      style="-fx-padding: 40;">
+
+    <Label text="Registrati su HackHub" styleClass="title-label"/>
+    <Label text="Crea il tuo account" styleClass="subtitle-label"/>
+
+    <VBox spacing="12" style="-fx-max-width: 350;">
+        <Label text="Username" styleClass="text-secondary"/>
+        <TextField fx:id="txtUsername" promptText="Il tuo username (3-50 caratteri)" styleClass="text-field-dark"/>
+
+        <Label text="Email" styleClass="text-secondary"/>
+        <TextField fx:id="txtEmail" promptText="email@esempio.com" styleClass="text-field-dark"/>
+
+        <Label text="Password" styleClass="text-secondary"/>
+        <PasswordField fx:id="txtPassword" promptText="Password" styleClass="text-field-dark"/>
+
+        <Label text="Conferma Password" styleClass="text-secondary"/>
+        <PasswordField fx:id="txtConfermaPassword" promptText="Ripeti la password" styleClass="text-field-dark"/>
+
+        <Label fx:id="lblErrore" text="" style="-fx-text-fill: #EF4444; -fx-font-size: 13px;"
+               managed="false" visible="false"/>
+    </VBox>
+
+    <HBox spacing="12" alignment="CENTER">
+        <Button text="Registrati" styleClass="btn-accent" onAction="#onRegistra"/>
+        <Button text="Annulla" styleClass="btn-secondary" onAction="#onAnnulla"/>
+    </HBox>
+
+</VBox>

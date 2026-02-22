@@ -1,0 +1,49 @@
+package unicam.notifiche;
+import java.util.Date;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "notifiche")
+public class Notifiche {
+    @Id
+    @Column(name = "Id", nullable = false)
+    private int Id;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private TipoNotifica tipo;
+    @Column(name = "destina", nullable = false)
+    private String destinatario;
+    @Column(name = "mittente", nullable = false)
+    private String mittente;
+    @Column(name = "messaggio", nullable = false)
+    private String messaggio;
+
+    protected Notifiche() {}
+
+    public Notifiche(TipoNotifica tipo, String messaggio, String mittente, String destinatario) {
+        this.tipo = tipo;
+        this.messaggio = messaggio;
+        this.mittente = mittente;
+        this.destinatario = destinatario;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public TipoNotifica getTipo() {
+        return tipo;
+    }
+
+    public String getDestinatario() {
+        return destinatario;
+    }
+
+    public String getMittente() {
+        return mittente;
+    }
+
+    public String getMessaggio() {
+        return messaggio;
+    }
+}

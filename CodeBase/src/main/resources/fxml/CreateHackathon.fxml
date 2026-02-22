@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="unicam.controller.CreateHackathonController"
+            styleClass="root">
+
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="top-bar"
+              style="-fx-padding: 16 40;">
+            <Button text="Indietro" styleClass="btn-secondary" onAction="#onIndietro"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Nuovo Hackathon" styleClass="title-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox spacing="20" style="-fx-padding: 24 40 40 40; -fx-max-width: 600;">
+
+                <VBox spacing="8" styleClass="detail-card">
+                    <Label text="Informazioni Generali" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                    <Label text="Nome Hackathon" styleClass="text-secondary"/>
+                    <TextField fx:id="txtNome" promptText="Nome univoco" styleClass="text-field-dark"/>
+
+                    <Label text="Luogo" styleClass="text-secondary"/>
+                    <TextField fx:id="txtLuogo" promptText="Luogo dell'evento" styleClass="text-field-dark"/>
+
+                    <Label text="Regolamento" styleClass="text-secondary"/>
+                    <TextArea fx:id="txtRegolamento" promptText="Regolamento dell'hackathon..."
+                              prefHeight="100" wrapText="true" styleClass="text-area-dark"/>
+                </VBox>
+
+                <VBox spacing="8" styleClass="detail-card">
+                    <Label text="Date" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                    <Label text="Data Inizio" styleClass="text-secondary"/>
+                    <DatePicker fx:id="dpDataInizio" styleClass="combo-box-dark" maxWidth="Infinity"/>
+
+                    <Label text="Data Fine" styleClass="text-secondary"/>
+                    <DatePicker fx:id="dpDataFine" styleClass="combo-box-dark" maxWidth="Infinity"/>
+
+                    <Label text="Scadenza Iscrizioni" styleClass="text-secondary"/>
+                    <DatePicker fx:id="dpScadenzaIscrizioni" styleClass="combo-box-dark" maxWidth="Infinity"/>
+                </VBox>
+
+                <VBox spacing="8" styleClass="detail-card">
+                    <Label text="Configurazione Team" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                    <Label text="Dimensione Massima Team" styleClass="text-secondary"/>
+                    <Spinner fx:id="spnDimTeam" styleClass="combo-box-dark" maxWidth="Infinity"/>
+
+                    <Label text="Numero Massimo Team" styleClass="text-secondary"/>
+                    <Spinner fx:id="spnMaxTeam" styleClass="combo-box-dark" maxWidth="Infinity"/>
+                </VBox>
+
+                <VBox spacing="8" styleClass="detail-card">
+                    <Label text="Staff" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                    <Label text="Email Giudice" styleClass="text-secondary"/>
+                    <TextField fx:id="txtGiudice" promptText="giudice@email.com" styleClass="text-field-dark"/>
+
+                    <Label text="Email Mentori (separati da virgola)" styleClass="text-secondary"/>
+                    <TextField fx:id="txtMentori" promptText="mentore1@email.com, mentore2@email.com"
+                               styleClass="text-field-dark"/>
+                </VBox>
+
+                <Label fx:id="lblErrore" text="" style="-fx-text-fill: #EF4444; -fx-font-size: 13px;"
+                       managed="false" visible="false"/>
+
+                <Button text="Crea Hackathon" styleClass="btn-accent" onAction="#onCrea"
+                        maxWidth="Infinity" style="-fx-padding: 14;"/>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

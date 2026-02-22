@@ -24,9 +24,15 @@ public class MembroStaff implements UtenzaAmministrazione {
         this.password = password;
     }
 
-    public String getUserName() { return userName; }
-    public String getEmail() { return email; }
-    public String getPassword() { return password; }
+    public String getUsername() { return this.userName; }
+
+    public String getEmail() { return this.email; }
+    public String getPassword() { return this.password; }
+
+    @Override
+    public String getRuolo() {
+        return "";
+    }
 
     /**
      * accesso sottomissioni()

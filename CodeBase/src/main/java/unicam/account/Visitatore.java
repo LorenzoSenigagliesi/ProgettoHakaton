@@ -15,6 +15,21 @@ public class Visitatore implements UtenteGenerico {
         this.userName=userName;
     }
 
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
+    @Override
+    public String getEmail() {
+        return "";
+    }
+
+    @Override
+    public String getPassword() {
+        return "";
+    }
+
     // Metodi Object
     @Override
     public boolean equals(Object o) {
@@ -28,6 +43,7 @@ public class Visitatore implements UtenteGenerico {
     public int hashCode() {
         return Objects.hash(userName);
     }
+
 
     @Override
     public String toString() {

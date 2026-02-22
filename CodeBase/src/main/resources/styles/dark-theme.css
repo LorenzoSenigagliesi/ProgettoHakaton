@@ -162,3 +162,113 @@
     -fx-border-color: transparent transparent #2A2A40 transparent;
     -fx-border-width: 0 0 1 0;
 }
+
+/* ===== Text Field ===== */
+
+.text-field-dark {
+    -fx-background-color: #1E1E2E;
+    -fx-text-fill: #F8FAFC;
+    -fx-prompt-text-fill: #64748B;
+    -fx-border-color: #2A2A40;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14;
+    -fx-font-size: 14px;
+}
+
+.text-field-dark:focused {
+    -fx-border-color: #6366F1;
+    -fx-effect: dropshadow(gaussian, rgba(99,102,241,0.25), 8, 0, 0, 0);
+}
+
+/* ===== Password Field ===== */
+
+.text-field-dark .password-field {
+    -fx-background-color: #1E1E2E;
+    -fx-text-fill: #F8FAFC;
+}
+
+/* ===== ComboBox / DatePicker ===== */
+
+.combo-box-dark {
+    -fx-background-color: #1E1E2E;
+    -fx-border-color: #2A2A40;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 4 8;
+}
+
+.combo-box-dark .list-cell {
+    -fx-text-fill: #F8FAFC;
+    -fx-background-color: #1E1E2E;
+}
+
+.combo-box-dark .list-view {
+    -fx-background-color: #1E1E2E;
+}
+
+.combo-box-dark .list-view .list-cell:hover {
+    -fx-background-color: #2A2A40;
+}
+
+.combo-box-dark .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box-dark .arrow {
+    -fx-background-color: #94A3B8;
+}
+
+/* ===== Spinner ===== */
+
+.combo-box-dark .increment-arrow-button,
+.combo-box-dark .decrement-arrow-button {
+    -fx-background-color: #2A2A40;
+}
+
+.combo-box-dark .increment-arrow-button .increment-arrow,
+.combo-box-dark .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: #94A3B8;
+}
+
+/* ===== Button Danger ===== */
+
+.btn-danger {
+    -fx-background-color: #EF4444;
+    -fx-text-fill: #F8FAFC;
+    -fx-font-size: 14px;
+    -fx-padding: 10 24;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #DC2626;
+}
+
+/* ===== Button Warning ===== */
+
+.btn-warning {
+    -fx-background-color: #F59E0B;
+    -fx-text-fill: #0F0F1E;
+    -fx-font-size: 14px;
+    -fx-padding: 10 24;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+
+.btn-warning:hover {
+    -fx-background-color: #D97706;
+}
+
+/* ===== Disabled Button ===== */
+
+.btn-primary:disabled,
+.btn-accent:disabled,
+.btn-danger:disabled,
+.btn-warning:disabled {
+    -fx-opacity: 0.4;
+    -fx-cursor: default;
+}

@@ -15,10 +15,7 @@
             <Button fx:id="btnIndietro" text="Indietro" styleClass="btn-secondary"
                     onAction="#onIndietro"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button fx:id="btnIscriviti" text="Iscriviti" styleClass="btn-accent"
-                    onAction="#onIscriviti"/>
-            <Button fx:id="btnRegolamento" text="Regolamento" styleClass="btn-primary"
-                    onAction="#onRegolamento"/>
+            <HBox fx:id="topActions" spacing="10" alignment="CENTER_RIGHT"/>
         </HBox>
     </top>
 
@@ -69,6 +66,13 @@
                         <Label fx:id="lblStato" styleClass="badge-stato"/>
                     </HBox>
 
+                    <HBox fx:id="hboxVincitore" spacing="12" alignment="CENTER_LEFT"
+                          managed="false" visible="false">
+                        <Label text="Vincitore:" styleClass="text-secondary"
+                               style="-fx-min-width: 160;"/>
+                        <Label fx:id="lblVincitore" style="-fx-text-fill: #00F5A0; -fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    </HBox>
+
                 </VBox>
 
                 <!-- Regolamento -->
@@ -76,8 +80,70 @@
                     <Label text="Regolamento" styleClass="text-primary"
                            style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                     <TextArea fx:id="txtRegolamento" editable="false" wrapText="true"
-                              prefHeight="150" styleClass="text-area-dark"/>
+                              prefHeight="120" styleClass="text-area-dark"/>
                 </VBox>
+
+                <!-- Sezione Sottomissione (per Membro Team iscritto, durante InCorso) -->
+                <VBox fx:id="sezioneSottomissione" spacing="8" managed="false" visible="false">
+                    <Label text="La tua Sottomissione" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <TextArea fx:id="txtSottomissione" wrapText="true"
+                              prefHeight="100" promptText="Inserisci la tua sottomissione..."
+                              styleClass="text-area-dark"/>
+                    <Button fx:id="btnInviaSottomissione" text="Invia Sottomissione"
+                            styleClass="btn-accent" onAction="#onInviaSottomissione"/>
+                </VBox>
+
+                <!-- Sezione Richiesta Supporto (MembroTeam durante InCorso) -->
+                <VBox fx:id="sezioneRichiestaSupp" spacing="8" managed="false" visible="false"
+                      styleClass="detail-card">
+                    <Label text="Richiesta di Supporto" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <TextArea fx:id="txtRichiestaSupp" wrapText="true" prefHeight="60"
+                              promptText="Descrivi la tua richiesta di supporto..." styleClass="text-area-dark"/>
+                    <Button text="Invia Richiesta" styleClass="btn-primary" onAction="#onInviaRichiestaSupp"/>
+                </VBox>
+
+                <!-- Sezione Mentore -->
+                <VBox fx:id="sezioneMentore" spacing="12" managed="false" visible="false"
+                      styleClass="detail-card">
+                    <Label text="Azioni Mentore" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <HBox spacing="12">
+                        <Button text="Segnala Team" styleClass="btn-warning" onAction="#onSegnalaTeam"/>
+                        <Button text="Proponi Call" styleClass="btn-primary" onAction="#onProponiCall"/>
+                    </HBox>
+                    <Label text="Richieste di supporto ricevute:" styleClass="text-secondary"
+                           style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    <VBox fx:id="listaRichiesteSupp" spacing="6"/>
+                </VBox>
+
+                <!-- Sezione Staff: Accesso Sottomissioni + Visualizza Team -->
+                <VBox fx:id="sezioneStaff" spacing="12" managed="false" visible="false"
+                      styleClass="detail-card">
+                    <Label text="Team Iscritti e Sottomissioni" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <VBox fx:id="listaTeamIscritti" spacing="8"/>
+                </VBox>
+
+                <!-- Sezione Azioni Organizzatore -->
+                <VBox fx:id="sezioneOrganizzatore" spacing="12" managed="false" visible="false"
+                      styleClass="detail-card">
+                    <Label text="Gestione Organizzatore" styleClass="text-primary"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                    <HBox spacing="12">
+                        <Button fx:id="btnCambiaStato" text="Avanza Stato" styleClass="btn-primary"
+                                onAction="#onCambiaStato"/>
+                        <Button fx:id="btnProclamaVincitore" text="Proclama Vincitore" styleClass="btn-accent"
+                                onAction="#onProclamaVincitore"/>
+                        <Button text="Ammonisci Team" styleClass="btn-warning" onAction="#onAmmonisciTeam"/>
+                        <Button text="Aggiungi Mentori" styleClass="btn-secondary" onAction="#onAddMentori"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Messaggio feedback -->
+                <Label fx:id="lblFeedback" text="" managed="false" visible="false"
+                       style="-fx-font-size: 14px;"/>
 
             </VBox>
         </ScrollPane>
