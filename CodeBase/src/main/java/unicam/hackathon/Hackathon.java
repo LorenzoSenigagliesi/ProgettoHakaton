@@ -42,9 +42,15 @@ public class Hackathon {
     @Column (name = "giudice")
     private String giudice;
 
-    @Column (name = "organizzatore")
+    @Column (name = "Organizzatore")
     private String organizzatore;
 
+    @Column (name = "maxteam")
+    private int maxteam;
+
+
+    @Column (name = "vincitori")
+    private String vincitori;
 
     //getter & setter
 
@@ -58,6 +64,10 @@ public class Hackathon {
 
     public Date getData() {
         return this.data;
+    }
+
+    public int getMaxteam() {
+        return maxteam;
     }
 
     public void setData(Date data) {
@@ -134,5 +144,13 @@ public class Hackathon {
             case StatoHackathon.InCorso -> stato = StatoHackathon.InValutazione;
             case StatoHackathon.InValutazione -> stato = StatoHackathon.Concluso;
         }
+    }
+
+    public String getVincitori() {
+        return vincitori;
+    }
+
+    public void setVincitori(String vincitori) {
+        this.vincitori = vincitori;
     }
 }

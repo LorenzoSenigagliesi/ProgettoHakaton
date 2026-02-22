@@ -2,13 +2,13 @@ package unicam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import unicam.SQLInterface.TabellaAmministrazione;
-import unicam.SQLInterface.TabellaHackathon;
-import unicam.SQLInterface.TabellaTeam;
-import unicam.SQLInterface.TabellaUtenti;
+import unicam.SQLInterface.*;
 import unicam.account.*;
 import unicam.amministrazione.*;
 import unicam.hackathon.Hackathon;
+import unicam.hackathon.Iscrizioni;
+import unicam.hackathon.MentoriHackathon;
+import unicam.notifiche.Notifiche;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,16 +20,22 @@ public class SQLService {
     private final TabellaAmministrazione tabellaAmministrazione;
     private final TabellaHackathon tabellaHackathon;
     private final TabellaTeam tabellaTeam;
-
+    private final TabellaMentoriHackathon tabellaMentoriHackathon;
+    private final TabellaNotifiche tabellaNotifiche;
+    private final TabellaIscrizioni tabellaIscrizioni;
     @Autowired
     public SQLService(TabellaUtenti tabellaUtenti,
                       TabellaAmministrazione tabellaAmministrazione,
                       TabellaHackathon tabellaHackathon,
-                      TabellaTeam tabellaTeam) {
+                      TabellaTeam tabellaTeam,
+                      TabellaMentoriHackathon tabellaMentoriHackathon, TabellaNotifiche tabellaNotifiche, TabellaIscrizioni tabellaIscrizioni) {
         this.tabellaUtenti = tabellaUtenti;
         this.tabellaAmministrazione = tabellaAmministrazione;
         this.tabellaHackathon = tabellaHackathon;
         this.tabellaTeam = tabellaTeam;
+        this.tabellaMentoriHackathon = tabellaMentoriHackathon;
+        this.tabellaNotifiche = tabellaNotifiche;
+        this.tabellaIscrizioni = tabellaIscrizioni;
     }
 
     public List<Hackathon> getAllHackathons() {
@@ -40,7 +46,7 @@ public class SQLService {
         return tabellaHackathon.existsByNome(hackatonName);
     }
 
-    public boolean CreateHackathon(Hackathon newHackaton) {
+    public boolean salvaHackathon(Hackathon newHackaton) {
         try {
             tabellaHackathon.save(newHackaton);
             return true;
@@ -112,7 +118,21 @@ public class SQLService {
 
     public boolean salvaNotifica(Notifiche Notifica) {
         try {
-            tabellanotifiche.save(Notifica);
+            tabellaNotifiche.save(Notifica);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Iscrizioni> getAllIscrizioni(String NomeHackathon) {
+        return tabellaIscrizioni.findByHackathon(NomeHackathon);
+    }
+
+    public boolean salvaIscrizione(Iscrizioni Iscrizione) {
+        try {
+            tabellaIscrizioni.save(Iscrizione);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
