@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unicam.SQLInterface.*;
 import unicam.account.*;
-import unicam.amministrazione.*;
 import unicam.hackathon.Hackathon;
 import unicam.hackathon.Iscrizioni;
 import unicam.hackathon.MentoriHackathon;

@@ -15,14 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import unicam.CodeBaseApplication;
-import unicam.account.GestioneAccount;
-import unicam.account.UtenteGenerico;
-import unicam.account.UtenteRegistrato;
-import unicam.account.TipoUtente;
-import unicam.amministrazione.Giudice;
-import unicam.amministrazione.Mentore;
-import unicam.amministrazione.Organizzatore;
-import unicam.amministrazione.UtenzaAmministrazione;
+import unicam.account.*;
 import unicam.SQLService;
 import unicam.hackathon.GestioneHackathon;
 import unicam.hackathon.Hackathon;
@@ -178,7 +171,7 @@ public class HomeController {
                 headerActions.getChildren().addFirst(btnCambiaRuolo);
 
                 // Bottoni specifici per ruolo
-                if (utente instanceof Organizzatore) {
+                if ("Organizzatore".equals(staff.getRuolo())) {
                     Button btnCreaHackathon = new Button("Crea Hackathon");
                     btnCreaHackathon.getStyleClass().add("btn-accent");
                     btnCreaHackathon.setStyle("-fx-padding: 6 16; -fx-font-size: 12px;");
@@ -187,15 +180,15 @@ public class HomeController {
                     headerActions.getChildren().addFirst(btnCreaHackathon);
                 }
 
-                if (utente instanceof Giudice giudice) {
+                if ("Giudice".equals(staff.getRuolo())) {
                     Button btnValuta = new Button("Hackathon da Giudicare");
                     btnValuta.getStyleClass().add("btn-primary");
                     btnValuta.setStyle("-fx-padding: 6 16; -fx-font-size: 12px;");
-                    btnValuta.setOnAction(e -> showHackathonDaGiudicare(giudice));
+                    btnValuta.setOnAction(e -> showHackathonDaGiudicare(staff));
                     headerActions.getChildren().addFirst(btnValuta);
                 }
 
-                if (utente instanceof Mentore mentore) {
+                if ("Mentore".equals(staff.getRuolo())) {
                     Button btnDashboard = new Button("Dashboard Mentore");
                     btnDashboard.getStyleClass().add("btn-accent");
                     btnDashboard.setStyle("-fx-padding: 6 16; -fx-font-size: 12px;");
@@ -271,8 +264,8 @@ public class HomeController {
         return card;
     }
 
-    private void showHackathonDaGiudicare(Giudice giudice) {
-        List<Hackathon> hackathons = gestioneHackathon.HackathonDaGiudicare(giudice.getEmail());
+    private void showHackathonDaGiudicare(UtenzaAmministrazione staff) {
+        List<Hackathon> hackathons = gestioneHackathon.HackathonDaGiudicare(staff.getEmail());
         if (hackathons.isEmpty()) {
             javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
                     javafx.scene.control.Alert.AlertType.INFORMATION);
@@ -408,18 +401,9 @@ public class HomeController {
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(ruolo -> {
-            UtenteGenerico corrente = gestioneAccount.getUtenteCorrente();
-            if (corrente instanceof UtenzaAmministrazione admin) {
-                unicam.amministrazione.StaffDecorator nuovoRuolo = switch (ruolo) {
-                    case "Organizzatore" -> new Organizzatore(admin);
-                    case "Mentore" -> new unicam.amministrazione.Mentore(admin);
-                    case "Giudice" -> new Giudice(admin);
-                    default -> null;
-                };
-                if (nuovoRuolo != null) {
-                    gestioneAccount.cambiaRuolo(nuovoRuolo);
-                    refreshUI();
-                }
+
+            if (gestioneAccount.cambiaRuolo(RuoloStaff.valueOf(ruolo))) {
+                refreshUI();
             }
         });
     }
