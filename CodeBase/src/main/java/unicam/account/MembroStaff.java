@@ -1,4 +1,4 @@
-package unicam.amministrazione;
+package unicam.account;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +14,9 @@ public class MembroStaff implements UtenzaAmministrazione {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Transient
+    private RuoloStaff ruolo = RuoloStaff.Null;
 
     // Costruttore vuoto richiesto da JPA
     protected MembroStaff() {}
@@ -31,7 +34,11 @@ public class MembroStaff implements UtenzaAmministrazione {
 
     @Override
     public String getRuolo() {
-        return "";
+        return this.ruolo.toString();
+    }
+
+    public void setRuolo(RuoloStaff ruolo) {
+        this.ruolo = ruolo;
     }
 
     /**

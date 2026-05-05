@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import unicam.account.GestioneAccount;
-import unicam.amministrazione.Mentore;
+import unicam.account.UtenzaAmministrazione;
 import unicam.calendario.Call;
 import unicam.calendario.GestioneCall;
 import unicam.hackathon.MentoriHackathon;
@@ -65,19 +65,19 @@ public class MentoreController {
 
     @FXML
     public void initialize() {
-        if (!(gestioneAccount.getUtenteCorrente() instanceof Mentore)) {
+        if (!(gestioneAccount.getUtenteCorrente() instanceof UtenzaAmministrazione staff)
+                || !"Mentore".equals(staff.getRuolo())) {
             lblTitolo.setText("Accesso non autorizzato");
             return;
         }
 
-        Mentore mentore = (Mentore) gestioneAccount.getUtenteCorrente();
-        lblTitolo.setText("Dashboard Mentore: " + mentore.getUsername());
+        lblTitolo.setText("Dashboard Mentore: " + staff.getUsername());
 
         // Cerca tutti gli hackathon dove questo mentore è assegnato
         List<String> hackathonNames = sqlService.getAllHackathons().stream()
                 .filter(h -> {
                     List<MentoriHackathon> mentori = sqlService.getMentoriHackathon(h.getNome());
-                    return mentori.stream().anyMatch(m -> m.getEmail().equals(mentore.getEmail()));
+                    return mentori.stream().anyMatch(m -> m.getEmail().equals(staff.getEmail()));
                 })
                 .map(h -> h.getNome())
                 .toList();
@@ -94,13 +94,13 @@ public class MentoreController {
             loadTeamPerHackathon(cmbHackathon.getValue());
         }
 
-        loadRichieste(mentore);
-        loadCall(mentore);
+        loadRichieste(staff);
+        loadCall(staff);
     }
 
-    private void loadRichieste(Mentore mentore) {
+    private void loadRichieste(UtenzaAmministrazione staff) {
         richiesteList.getChildren().clear();
-        List<RichiesteSupporto> richieste = gestioneSupporto.visualizzaRichiesteMentore(mentore.getEmail());
+        List<RichiesteSupporto> richieste = gestioneSupporto.visualizzaRichiesteMentore(staff.getEmail());
 
         if (richieste.isEmpty()) {
             Label empty = new Label("Nessuna richiesta di supporto ricevuta.");
@@ -150,10 +150,10 @@ public class MentoreController {
             btnRispondi.setOnAction(e -> {
                 String risposta = txtRisposta.getText().trim();
                 if (!risposta.isEmpty()) {
-                    Mentore mentore = (Mentore) gestioneAccount.getUtenteCorrente();
-                    if (gestioneSupporto.rispondiRichiesta(richiesta.getId(), risposta, mentore.getEmail())) {
+                    UtenzaAmministrazione currentStaff = (UtenzaAmministrazione) gestioneAccount.getUtenteCorrente();
+                    if (gestioneSupporto.rispondiRichiesta(richiesta.getId(), risposta, currentStaff.getEmail())) {
                         showFeedback("Risposta inviata!", false);
-                        loadRichieste(mentore);
+                        loadRichieste(currentStaff);
                     } else {
                         showFeedback("Errore nell'invio della risposta.", true);
                     }
@@ -166,8 +166,8 @@ public class MentoreController {
             btnChiudi.setOnAction(e -> {
                 if (gestioneSupporto.chiudiRichiesta(richiesta.getId())) {
                     showFeedback("Richiesta chiusa.", false);
-                    Mentore mentore = (Mentore) gestioneAccount.getUtenteCorrente();
-                    loadRichieste(mentore);
+                    UtenzaAmministrazione currentStaff = (UtenzaAmministrazione) gestioneAccount.getUtenteCorrente();
+                    loadRichieste(currentStaff);
                 }
             });
 
@@ -186,9 +186,9 @@ public class MentoreController {
         return card;
     }
 
-    private void loadCall(Mentore mentore) {
+    private void loadCall(UtenzaAmministrazione staff) {
         callList.getChildren().clear();
-        List<Call> calls = gestioneCall.visualizzaCallMentore(mentore.getEmail());
+        List<Call> calls = gestioneCall.visualizzaCallMentore(staff.getEmail());
 
         if (calls.isEmpty()) {
             Label empty = new Label("Nessuna call programmata.");
@@ -221,9 +221,9 @@ public class MentoreController {
             btnElimina.getStyleClass().add("btn-danger");
             btnElimina.setStyle("-fx-padding: 4 12; -fx-font-size: 11px;");
             btnElimina.setOnAction(e -> {
-                if (gestioneCall.eliminaCall(c.getId(), mentore.getEmail())) {
+                if (gestioneCall.eliminaCall(c.getId(), staff.getEmail())) {
                     showFeedback("Call eliminata.", false);
-                    loadCall(mentore);
+                    loadCall(staff);
                 }
             });
             row.getChildren().add(btnElimina);
@@ -234,7 +234,8 @@ public class MentoreController {
 
     @FXML
     private void onProponiCall() {
-        if (!(gestioneAccount.getUtenteCorrente() instanceof Mentore mentore)) return;
+        if (!(gestioneAccount.getUtenteCorrente() instanceof UtenzaAmministrazione mentore)
+                || !"Mentore".equals(mentore.getRuolo())) return;
 
         String hackathonNome = cmbHackathon.getValue();
         String titolo = txtCallTitolo.getText().trim();

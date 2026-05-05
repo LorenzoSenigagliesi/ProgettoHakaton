@@ -3,8 +3,6 @@ package unicam.account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unicam.SQLService;
-import unicam.amministrazione.*;
-
 
 import java.util.Objects;
 import java.util.Random;
@@ -96,23 +94,11 @@ public class GestioneAccount {
 
     //metodi per amministratori Team
 
-    public boolean cambiaRuolo(StaffDecorator ruolo){
-        if (!(utenteCorrente instanceof UtenzaAmministrazione)){
+    public boolean cambiaRuolo(RuoloStaff ruolo){
+        if (!(utenteCorrente instanceof MembroStaff staff)){
             return false;
         }
-        switch (ruolo){
-            case Organizzatore organizzatore:
-                utenteCorrente = new Organizzatore((UtenzaAmministrazione)utenteCorrente);
-                break;
-            case Mentore mentore:
-                utenteCorrente = new Mentore((UtenzaAmministrazione)utenteCorrente);
-                break;
-            case Giudice giudice:
-                utenteCorrente = new Giudice((UtenzaAmministrazione)utenteCorrente);
-               break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + ruolo);
-        }
+        staff.setRuolo(ruolo);
         return true;
     }
 }

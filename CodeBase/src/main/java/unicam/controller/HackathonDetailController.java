@@ -19,10 +19,7 @@ import unicam.account.GestioneAccount;
 import unicam.account.UtenteGenerico;
 import unicam.account.UtenteRegistrato;
 import unicam.account.TipoUtente;
-import unicam.amministrazione.Giudice;
-import unicam.amministrazione.Mentore;
-import unicam.amministrazione.Organizzatore;
-import unicam.amministrazione.UtenzaAmministrazione;
+import unicam.account.UtenzaAmministrazione;
 import unicam.calendario.GestioneCall;
 import unicam.hackathon.GestioneHackathon;
 import unicam.hackathon.Hackathon;
@@ -167,48 +164,49 @@ public class HackathonDetailController {
             }
         }
 
-        // -- Giudice: bottone Valuta (se InValutazione e assegnato) --
-        if (utente instanceof Giudice giudice
-                && stato == StatoHackathon.InValutazione
-                && hackathon.getGiudice() != null
-                && hackathon.getGiudice().equals(giudice.getEmail())) {
-            Button btnValuta = new Button("Valuta Sottomissioni");
-            btnValuta.getStyleClass().add("btn-primary");
-            btnValuta.setOnAction(e -> openValutazione());
-            topActions.getChildren().add(btnValuta);
-        }
-
-        // -- Staff: tutti i membri dello staff possono vedere i team iscritti --
-        if (utente instanceof UtenzaAmministrazione) {
+        // -- Staff: controlli basati su ruolo --
+        if (utente instanceof UtenzaAmministrazione staff) {
+            // Tutti i membri dello staff possono vedere i team iscritti
             sezioneStaff.setVisible(true);
             sezioneStaff.setManaged(true);
             loadTeamIscritti();
-        }
 
-        // -- Mentore: sezione azioni mentore (se assegnato a questo hackathon e InCorso) --
-        if (utente instanceof Mentore mentore && stato == StatoHackathon.InCorso) {
-            List<MentoriHackathon> mentori = sqlService.getMentoriHackathon(hackathon.getNome());
-            boolean isMentoreAssegnato = mentori.stream()
-                    .anyMatch(mh -> mh.getEmail().equals(mentore.getEmail()));
-
-            if (isMentoreAssegnato) {
-                sezioneMentore.setVisible(true);
-                sezioneMentore.setManaged(true);
-                loadRichiesteSupporto(mentore);
+            // -- Giudice: bottone Valuta (se InValutazione e assegnato) --
+            if ("Giudice".equals(staff.getRuolo())
+                    && stato == StatoHackathon.InValutazione
+                    && hackathon.getGiudice() != null
+                    && hackathon.getGiudice().equals(staff.getEmail())) {
+                Button btnValuta = new Button("Valuta Sottomissioni");
+                btnValuta.getStyleClass().add("btn-primary");
+                btnValuta.setOnAction(e -> openValutazione());
+                topActions.getChildren().add(btnValuta);
             }
-        }
 
-        // -- Organizzatore: sezione gestione (se è organizzatore di questo hackathon) --
-        if (utente instanceof Organizzatore organizzatore
-                && hackathon.getOrganizzatore() != null
-                && hackathon.getOrganizzatore().equals(organizzatore.getEmail())) {
-            sezioneOrganizzatore.setVisible(true);
-            sezioneOrganizzatore.setManaged(true);
+            // -- Mentore: sezione azioni mentore (se assegnato a questo hackathon e InCorso) --
+            if ("Mentore".equals(staff.getRuolo()) && stato == StatoHackathon.InCorso) {
+                List<MentoriHackathon> mentori = sqlService.getMentoriHackathon(hackathon.getNome());
+                boolean isMentoreAssegnato = mentori.stream()
+                        .anyMatch(mh -> mh.getEmail().equals(staff.getEmail()));
 
-            // Disabilita proclama vincitore se non in valutazione
-            btnProclamaVincitore.setDisable(stato != StatoHackathon.InValutazione);
-            // Disabilita cambia stato se concluso
-            btnCambiaStato.setDisable(stato == StatoHackathon.Concluso);
+                if (isMentoreAssegnato) {
+                    sezioneMentore.setVisible(true);
+                    sezioneMentore.setManaged(true);
+                    loadRichiesteSupporto(staff);
+                }
+            }
+
+            // -- Organizzatore: sezione gestione (se è organizzatore di questo hackathon) --
+            if ("Organizzatore".equals(staff.getRuolo())
+                    && hackathon.getOrganizzatore() != null
+                    && hackathon.getOrganizzatore().equals(staff.getEmail())) {
+                sezioneOrganizzatore.setVisible(true);
+                sezioneOrganizzatore.setManaged(true);
+
+                // Disabilita proclama vincitore se non in valutazione
+                btnProclamaVincitore.setDisable(stato != StatoHackathon.InValutazione);
+                // Disabilita cambia stato se concluso
+                btnCambiaStato.setDisable(stato == StatoHackathon.Concluso);
+            }
         }
     }
 
@@ -331,7 +329,8 @@ public class HackathonDetailController {
 
     @FXML
     private void onSegnalaTeam() {
-        if (!(gestioneAccount.getUtenteCorrente() instanceof Mentore mentore)) return;
+        if (!(gestioneAccount.getUtenteCorrente() instanceof UtenzaAmministrazione staff)
+                || !"Mentore".equals(staff.getRuolo())) return;
 
         // Chiedi il nome del team e il motivo
         TextInputDialog dialogTeam = new TextInputDialog();
@@ -352,13 +351,13 @@ public class HackathonDetailController {
 
         String teamNome = teamResult.get().trim();
         if (gestioneHackathon.segnalaTeam(teamNome, hackathon.getNome(),
-                motivoResult.get().trim(), mentore.getEmail())) {
+                motivoResult.get().trim(), staff.getEmail())) {
             showFeedback("Segnalazione inviata all'organizzatore.", false);
 
             // Notifica ai membri del team segnalato
             notificaMembriTeam(teamNome,
                     "Il tuo team è stato segnalato per: " + motivoResult.get().trim(),
-                    mentore.getEmail(), TipoNotifica.SEGNALAZIONE);
+                    staff.getEmail(), TipoNotifica.SEGNALAZIONE);
         } else {
             showFeedback("Errore nell'invio della segnalazione.", true);
         }
@@ -366,7 +365,8 @@ public class HackathonDetailController {
 
     @FXML
     private void onProponiCall() {
-        if (!(gestioneAccount.getUtenteCorrente() instanceof Mentore mentore)) return;
+        if (!(gestioneAccount.getUtenteCorrente() instanceof UtenzaAmministrazione staff)
+                || !"Mentore".equals(staff.getRuolo())) return;
 
         // Selezione del team destinatario
         List<Iscrizioni> iscrizioni = gestioneHackathon.ViewIscrizioni(hackathon.getNome());
@@ -405,20 +405,20 @@ public class HackathonDetailController {
         Date dataOra = new Date(System.currentTimeMillis() + 86400000L);
 
         String teamNome = teamResult.get();
-        if (gestioneCall.proponiCall(mentore.getEmail(), hackathon.getNome(),
+        if (gestioneCall.proponiCall(staff.getEmail(), hackathon.getNome(),
                 titoloResult.get().trim(), descrizione, dataOra, "", teamNome)) {
             showFeedback("Call proposta al team " + teamNome + "!", false);
 
             // Notifica i membri del team
             notificaMembriTeam(teamNome,
                     "Il mentore ti ha proposto una call: " + titoloResult.get().trim(),
-                    mentore.getEmail(), TipoNotifica.PROPOSTA_CALL);
+                    staff.getEmail(), TipoNotifica.PROPOSTA_CALL);
         } else {
             showFeedback("Errore nella creazione della call.", true);
         }
     }
 
-    private void loadRichiesteSupporto(Mentore mentore) {
+    private void loadRichiesteSupporto(UtenzaAmministrazione staff) {
         listaRichiesteSupp.getChildren().clear();
         List<RichiesteSupporto> richieste = gestioneSupporto.visualizzaRichieste(hackathon.getNome());
 
@@ -448,7 +448,8 @@ public class HackathonDetailController {
 
     @FXML
     private void onAmmonisciTeam() {
-        if (!(gestioneAccount.getUtenteCorrente() instanceof Organizzatore)) return;
+        if (!(gestioneAccount.getUtenteCorrente() instanceof UtenzaAmministrazione staff)
+                || !"Organizzatore".equals(staff.getRuolo())) return;
 
         // Mostra segnalazioni non gestite
         List<Segnalazione> segnalazioni =
@@ -475,10 +476,9 @@ public class HackathonDetailController {
                 showFeedback("Team " + seg.getTeamNome() + " ammonito.", false);
 
                 // Notifica ai membri del team ammonito
-                Organizzatore org = (Organizzatore) gestioneAccount.getUtenteCorrente();
                 notificaMembriTeam(seg.getTeamNome(),
                         "Il tuo team è stato ammonito dall'organizzatore per: " + seg.getMotivo(),
-                        org.getEmail(), TipoNotifica.AMMONIZIONE);
+                        staff.getEmail(), TipoNotifica.AMMONIZIONE);
             } else {
                 showFeedback("Errore nella gestione della segnalazione.", true);
             }
@@ -487,7 +487,8 @@ public class HackathonDetailController {
 
     @FXML
     private void onAddMentori() {
-        if (!(gestioneAccount.getUtenteCorrente() instanceof Organizzatore)) return;
+        if (!(gestioneAccount.getUtenteCorrente() instanceof UtenzaAmministrazione)
+                || !"Organizzatore".equals(((UtenzaAmministrazione) gestioneAccount.getUtenteCorrente()).getRuolo())) return;
 
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Aggiungi Mentori");

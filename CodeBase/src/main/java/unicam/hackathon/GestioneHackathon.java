@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unicam.SQLService;
 import unicam.account.Team;
-import unicam.amministrazione.Mentore;
+import unicam.account.UtenzaAmministrazione;
 import unicam.notifiche.Segnalazione;
 
 import java.util.Comparator;
@@ -29,9 +29,9 @@ public class GestioneHackathon {
         return SQL.getAllHackathons();
     }
 
-    public boolean addMentori(List<Mentore> mentori, String nomeHackathon){
+    public boolean addMentori(List<UtenzaAmministrazione> mentori, String nomeHackathon){
         MentoriHackathon mentoriHackathon;
-        for(Mentore m : mentori){
+        for(UtenzaAmministrazione m : mentori){
             mentoriHackathon = new MentoriHackathon(m.getEmail(), nomeHackathon);
             SQL.salvaMentori(mentoriHackathon);
         }

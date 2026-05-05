@@ -3,9 +3,6 @@ package unicam.hackathon;
 import java.util.Date;
 import jakarta.persistence.*;
 import unicam.account.Team;
-import unicam.amministrazione.Giudice;
-import unicam.amministrazione.Mentore;
-import unicam.amministrazione.Organizzatore;
 
 @Entity
 @Table(name = "hackathon")

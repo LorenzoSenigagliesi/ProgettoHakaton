@@ -1,6 +1,4 @@
-package unicam.amministrazione;
-
-import unicam.account.UtenteGenerico;
+package unicam.account;
 
 public interface UtenzaAmministrazione extends UtenteGenerico {
     public String getRuolo();
